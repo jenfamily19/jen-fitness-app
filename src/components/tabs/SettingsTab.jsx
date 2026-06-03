@@ -87,7 +87,33 @@ export default function SettingsTab() {
             placeholder="AIzaSy..."
             className="w-full mt-1.5 bg-slate-900 border border-slate-700 rounded-lg p-3 text-sm text-white focus:outline-none focus:border-indigo-500"
           />
-          <p className="text-[11px] text-slate-500 mt-1">Stored locally in your browser. Required for the Virtual Coach and Week Generation.</p>
+          <p className="text-xs text-slate-500 mt-2">
+            Stored locally in your browser. Required for the Virtual Coach and Week Generation.
+          </p>
+          <button 
+            onClick={async () => {
+              try {
+                if (!profile.apiKey) {
+                  alert("Please paste your API key first!");
+                  return;
+                }
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${profile.apiKey.trim()}`);
+                if (!res.ok) {
+                  const errorText = await res.text();
+                  alert(`API Error: ${res.status}\n${errorText}`);
+                  return;
+                }
+                const data = await res.json();
+                const modelNames = data.models.map(m => m.name).join('\n');
+                alert(`SUCCESS! Your key has access to these models:\n\n${modelNames}`);
+              } catch (err) {
+                alert(`Network Error: ${err.message}`);
+              }
+            }}
+            className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
+          >
+            Debug API Key (List Models)
+          </button>
         </div>
       </div>
 
