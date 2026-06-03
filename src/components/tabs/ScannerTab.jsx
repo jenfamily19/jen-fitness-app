@@ -66,7 +66,7 @@ Return a structured JSON breakdown of the meal's nutritional content. The JSON m
 Respond ONLY with the JSON object, absolutely no markdown wrappers like \`\`\`json.
       `;
 
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${profile.apiKey}`, {
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${profile.apiKey}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
