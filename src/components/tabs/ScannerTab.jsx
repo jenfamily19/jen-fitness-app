@@ -67,7 +67,7 @@ Return a structured JSON breakdown of the meal's nutritional content. The JSON m
 Respond ONLY with the JSON object, absolutely no markdown wrappers like \`\`\`json.
       `;
 
-      const genAI = new GoogleGenerativeAI(profile.apiKey);
+      const genAI = new GoogleGenerativeAI(profile.apiKey.trim());
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
       const result = await model.generateContent([

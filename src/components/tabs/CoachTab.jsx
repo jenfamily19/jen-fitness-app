@@ -37,7 +37,7 @@ Please be concise, encouraging, and provide scientifically sound fitness advice.
 
     try {
       const prompt = `${getSystemPrompt()}\n\nUser: ${input}`;
-      const genAI = new GoogleGenerativeAI(apiKey);
+      const genAI = new GoogleGenerativeAI(apiKey.trim());
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       
       const result = await model.generateContent(prompt);
@@ -72,7 +72,7 @@ Output ONLY valid JSON representing the 'workouts' array with this structure:
 ]
 Do not include markdown blocks or any other text. JUST JSON.`;
 
-      const genAI = new GoogleGenerativeAI(apiKey);
+      const genAI = new GoogleGenerativeAI(apiKey.trim());
       const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       
       const result = await model.generateContent(prompt);
