@@ -130,7 +130,7 @@ Respond ONLY with the JSON object, absolutely no markdown wrappers like \`\`\`js
         <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400 flex items-center gap-2 mb-4">
           <Camera size={24} className="text-emerald-400" /> AI Macro Scanner
         </h2>
-        <p className="text-sm text-slate-400 mb-6">
+        <p className="text-sm text-gray-500 mb-6">
           Snap a photo of an off-plan meal. Gemini Vision will analyze the contents and estimate the nutritional breakdown.
         </p>
 
@@ -147,12 +147,12 @@ Respond ONLY with the JSON object, absolutely no markdown wrappers like \`\`\`js
           {/* Image Upload Area */}
           <div 
             onClick={() => fileInputRef.current?.click()}
-            className="w-full aspect-video md:aspect-[21/9] rounded-xl border-2 border-dashed border-slate-700 bg-slate-900/50 flex flex-col items-center justify-center cursor-pointer hover:bg-slate-800/50 hover:border-emerald-500/50 transition-all overflow-hidden relative"
+            className="w-full aspect-video md:aspect-[21/9] rounded-xl border-2 border-dashed border-gray-200 bg-white shadow-sm border border-gray-100/50 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-50 hover:border-emerald-500/50 transition-all overflow-hidden relative"
           >
             {image ? (
               <img src={image} alt="Meal preview" className="w-full h-full object-cover" />
             ) : (
-              <div className="flex flex-col items-center text-slate-500 p-4 text-center">
+              <div className="flex flex-col items-center text-gray-400 p-4 text-center">
                 <Upload size={32} className="mb-2" />
                 <span className="font-semibold">Tap to select meal photo</span>
                 <span className="text-xs mt-1">JPEG, PNG, WEBP</span>
@@ -173,7 +173,7 @@ Respond ONLY with the JSON object, absolutely no markdown wrappers like \`\`\`js
             value={context}
             onChange={(e) => setContext(e.target.value)}
             placeholder="Add context (optional)... e.g. 'Mom's lasagna, lots of cheese'"
-            className="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-sm text-white placeholder:text-slate-500 focus:border-emerald-500 outline-none"
+            className="w-full bg-white shadow-sm border border-gray-100 border border-gray-200 rounded-lg p-3 text-sm text-gray-900 placeholder:text-gray-400 focus:border-emerald-500 outline-none"
           />
 
           {/* Error Message */}
@@ -183,7 +183,7 @@ Respond ONLY with the JSON object, absolutely no markdown wrappers like \`\`\`js
           <button 
             onClick={analyzeMeal} 
             disabled={loading || !image}
-            className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-3 px-4 rounded-xl shadow-lg transition-all"
+            className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 disabled:opacity-50 disabled:cursor-not-allowed text-gray-900 font-bold py-3 px-4 rounded-xl shadow-lg transition-all"
           >
             {loading ? <><Loader2 size={18} className="animate-spin" /> Scanning...</> : <><Camera size={18} /> Analyze Meal</>}
           </button>
@@ -192,7 +192,7 @@ Respond ONLY with the JSON object, absolutely no markdown wrappers like \`\`\`js
         {/* Results Display */}
         {result && (
           <div className="mt-8 animate-in slide-in-from-bottom-4 fade-in duration-500">
-            <h3 className="font-bold text-slate-200 text-lg mb-4">{result.name}</h3>
+            <h3 className="font-bold text-gray-800 text-lg mb-4">{result.name}</h3>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
               <MetricCard label="Calories" value={result.calories} unit="kcal" color="text-amber-400" />
@@ -202,17 +202,17 @@ Respond ONLY with the JSON object, absolutely no markdown wrappers like \`\`\`js
             </div>
 
             <div className="grid grid-cols-2 gap-3 mb-4">
-              <MetricCard label="Fiber" value={result.fiber} unit="g" color="text-slate-300" small />
-              <MetricCard label="Sugar" value={result.sugar} unit="g" color="text-slate-300" small />
+              <MetricCard label="Fiber" value={result.fiber} unit="g" color="text-gray-700" small />
+              <MetricCard label="Sugar" value={result.sugar} unit="g" color="text-gray-700" small />
             </div>
 
-            <div className="bg-slate-900 border border-slate-800 p-4 rounded-xl mb-6">
-              <p className="text-sm text-slate-300 leading-relaxed">{result.summary}</p>
+            <div className="bg-white shadow-sm border border-gray-100 border border-gray-200 p-4 rounded-xl mb-6">
+              <p className="text-sm text-gray-700 leading-relaxed">{result.summary}</p>
             </div>
 
             <button 
               onClick={handleSave}
-              className="w-full flex items-center justify-center gap-2 bg-slate-800 hover:bg-slate-700 text-emerald-400 font-bold py-3 px-4 rounded-xl border border-slate-700 transition-colors"
+              className="w-full flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-emerald-400 font-bold py-3 px-4 rounded-xl border border-gray-200 transition-colors"
             >
               <Save size={18} /> Save to Log
             </button>
@@ -223,23 +223,23 @@ Respond ONLY with the JSON object, absolutely no markdown wrappers like \`\`\`js
       {/* Logged Meals History */}
       {scannedMeals.length > 0 && (
         <div className="glass-panel rounded-2xl p-4 md:p-6">
-          <h3 className="font-semibold text-slate-200 mb-4">Saved Scans</h3>
+          <h3 className="font-semibold text-gray-800 mb-4">Saved Scans</h3>
           <div className="space-y-3">
             {scannedMeals.map(meal => (
-              <div key={meal.id} className="flex items-center gap-3 bg-slate-900/50 border border-slate-800 p-3 rounded-xl">
-                <div className="w-16 h-16 rounded-lg bg-slate-800 overflow-hidden shrink-0 border border-slate-700">
+              <div key={meal.id} className="flex items-center gap-3 bg-white shadow-sm border border-gray-100/50 border border-gray-200 p-3 rounded-xl">
+                <div className="w-16 h-16 rounded-lg bg-gray-100 overflow-hidden shrink-0 border border-gray-200">
                   <img src={meal.imageUrl} alt={meal.name} className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1">
-                  <h4 className="font-semibold text-sm text-slate-200">{meal.name}</h4>
-                  <div className="flex gap-2 text-[11px] text-slate-400 mt-1 font-medium">
+                  <h4 className="font-semibold text-sm text-gray-800">{meal.name}</h4>
+                  <div className="flex gap-2 text-[11px] text-gray-500 mt-1 font-medium">
                     <span className="text-amber-400">{meal.calories} kcal</span>
                     <span>•</span>
                     <span className="text-indigo-400">{meal.protein}g P</span>
                     <span className="text-emerald-400">{meal.carbs}g C</span>
                     <span className="text-rose-400">{meal.fats}g F</span>
                   </div>
-                  <div className="text-[10px] text-slate-500 mt-1">{new Date(meal.dateLogged).toLocaleString()}</div>
+                  <div className="text-[10px] text-gray-400 mt-1">{new Date(meal.dateLogged).toLocaleString()}</div>
                 </div>
                 <button onClick={() => deleteScannedMeal(meal.id)} className="text-slate-600 hover:text-red-400 transition-colors p-2 shrink-0">
                   <Trash2 size={16} />
@@ -255,11 +255,11 @@ Respond ONLY with the JSON object, absolutely no markdown wrappers like \`\`\`js
 
 function MetricCard({ label, value, unit, color, small = false }) {
   return (
-    <div className={`bg-slate-900 border border-slate-800 rounded-xl flex flex-col justify-center items-center text-center ${small ? 'p-2' : 'p-3'}`}>
-      <span className="text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">{label}</span>
+    <div className={`bg-white shadow-sm border border-gray-100 border border-gray-200 rounded-xl flex flex-col justify-center items-center text-center ${small ? 'p-2' : 'p-3'}`}>
+      <span className="text-[10px] uppercase tracking-wider text-gray-400 font-bold mb-1">{label}</span>
       <div className="flex items-baseline gap-1">
         <span className={`font-black ${small ? 'text-lg' : 'text-2xl'} ${color}`}>{value}</span>
-        <span className="text-xs text-slate-500 font-medium">{unit}</span>
+        <span className="text-xs text-gray-400 font-medium">{unit}</span>
       </div>
     </div>
   );

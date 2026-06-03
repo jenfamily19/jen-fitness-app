@@ -6,22 +6,22 @@
 
 @layer base {
   body {
-    @apply bg-[#0b0f19] text-[#f1f5f9] font-sans;
+    @apply bg-gray-50 text-gray-900 font-sans;
   }
 }
 
 @layer components {
   .glass-panel {
-    @apply bg-slate-800/70 backdrop-blur-md border border-white/5;
+    @apply bg-white shadow-sm border border-gray-100;
   }
   
   .custom-scrollbar::-webkit-scrollbar { 
     @apply w-1.5 h-1.5; 
   }
   .custom-scrollbar::-webkit-scrollbar-track { 
-    @apply bg-slate-900; 
+    @apply bg-gray-100; 
   }
   .custom-scrollbar::-webkit-scrollbar-thumb { 
-    @apply bg-slate-700 rounded-sm; 
+    @apply bg-gray-300 rounded-sm; 
   }
 }

@@ -13,7 +13,7 @@ function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
   
   return (
-    <div className="min-h-screen bg-[#0b0f19] text-[#f1f5f9] font-sans pb-20 md:pb-0">
+    <div className="min-h-screen bg-gray-50 text-gray-900 font-sans pb-20 md:pb-0">
       <NotificationEngine />
       <Header activeTab={activeTab} setActiveTab={setActiveTab} />
       

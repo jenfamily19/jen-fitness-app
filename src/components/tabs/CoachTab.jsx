@@ -117,35 +117,35 @@ Do not include markdown blocks or any other text. JUST JSON.`;
       
       {/* Chat Area */}
       <div className="lg:col-span-2 glass-panel rounded-2xl flex flex-col h-full overflow-hidden">
-        <div className="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-900/50">
-          <h2 className="font-semibold text-blue-400 flex items-center gap-2">
+        <div className="p-4 border-b border-gray-200 flex justify-between items-center bg-white shadow-sm border border-gray-100/50">
+          <h2 className="font-semibold text-emerald-600 flex items-center gap-2">
             <MessageSquare size={20} /> Virtual Coach
           </h2>
         </div>
         
         <div className="flex-1 overflow-y-auto p-6 space-y-4 custom-scrollbar">
           {chatHistory.length === 0 && (
-            <div className="text-center text-slate-500 mt-10 text-sm">
+            <div className="text-center text-gray-400 mt-10 text-sm">
               Ask your coach anything! Example: "Why is my energy low this week?" or "How can I improve my incline bench?"
             </div>
           )}
           {chatHistory.map((msg, idx) => (
             <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[80%] p-3 rounded-2xl text-sm ${msg.role === 'user' ? 'bg-blue-600 text-white rounded-tr-none' : 'bg-slate-800 text-slate-200 rounded-tl-none border border-slate-700'}`}>
+              <div className={`max-w-[80%] p-3 rounded-2xl text-sm ${msg.role === 'user' ? 'bg-emerald-600 text-white rounded-tr-none' : 'bg-gray-100 text-gray-800 rounded-tl-none border border-gray-200'}`}>
                 {msg.text}
               </div>
             </div>
           ))}
           {isLoading && (
             <div className="flex justify-start">
-              <div className="bg-slate-800 text-slate-400 p-3 rounded-2xl rounded-tl-none border border-slate-700 text-sm italic">
+              <div className="bg-gray-100 text-gray-500 p-3 rounded-2xl rounded-tl-none border border-gray-200 text-sm italic">
                 Thinking...
               </div>
             </div>
           )}
         </div>
         
-        <div className="p-4 border-t border-slate-800 bg-slate-900/50">
+        <div className="p-4 border-t border-gray-200 bg-white shadow-sm border border-gray-100/50">
           <div className="flex gap-2">
             <input 
               type="text" 
@@ -154,12 +154,12 @@ Do not include markdown blocks or any other text. JUST JSON.`;
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
               placeholder={apiKey ? "Message your coach..." : "Enter API Key in Settings first"}
               disabled={!apiKey || isLoading}
-              className="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-blue-500 disabled:opacity-50"
+              className="flex-1 bg-white shadow-sm border border-gray-100 border border-gray-200 rounded-xl px-4 py-2 text-sm text-gray-900 focus:outline-none focus:border-blue-500 disabled:opacity-50"
             />
             <button 
               onClick={handleSend}
               disabled={!apiKey || isLoading || !input.trim()}
-              className="bg-blue-600 hover:bg-blue-500 text-white p-2.5 rounded-xl transition-colors disabled:opacity-50 disabled:hover:bg-blue-600"
+              className="bg-emerald-600 text-white hover:bg-blue-500 text-gray-900 p-2.5 rounded-xl transition-colors disabled:opacity-50 disabled:hover:bg-emerald-600 text-white"
             >
               <Send size={18} />
             </button>
@@ -172,13 +172,13 @@ Do not include markdown blocks or any other text. JUST JSON.`;
         <h3 className="font-semibold text-indigo-400 mb-4 flex items-center gap-2">
           <Sparkles size={20} /> Week Generator
         </h3>
-        <p className="text-xs text-slate-400 mb-6">
+        <p className="text-xs text-gray-500 mb-6">
           The AI will analyze your telemetry (Energy: {telemetry.energy}, Sleep: {telemetry.sleep}) and medical profile to generate the perfect workout plan for Week {currentWeek + 1}. Your current week's history will be saved.
         </p>
         <button 
           onClick={handleGenerateWeek}
           disabled={isGenerating}
-          className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/10 transition-all active:scale-[0.98] disabled:opacity-70 disabled:active:scale-100 flex justify-center items-center gap-2"
+          className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-emerald-500 hover:to-teal-500 text-gray-900 font-semibold rounded-xl shadow-lg shadow-blue-500/10 transition-all active:scale-[0.98] disabled:opacity-70 disabled:active:scale-100 flex justify-center items-center gap-2"
         >
           {isGenerating ? "Analyzing..." : `Generate Week ${currentWeek + 1} 🚀`}
         </button>

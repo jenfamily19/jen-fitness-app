@@ -45,17 +45,17 @@ export default function SettingsTab() {
       
       {/* Medical Profile */}
       <div className="glass-panel rounded-2xl p-6">
-        <h2 className="text-lg font-semibold text-blue-400 mb-4 flex items-center gap-2">
+        <h2 className="text-lg font-semibold text-emerald-600 mb-4 flex items-center gap-2">
           <AlertTriangle size={20} /> Medical & Context Profile
         </h2>
         
         <div className="space-y-4">
           <div>
-            <label className="text-xs font-medium text-slate-400 uppercase tracking-wider block">SI Joint Pathology Status</label>
+            <label className="text-xs font-medium text-gray-500 uppercase tracking-wider block">SI Joint Pathology Status</label>
             <select 
               value={profile.siJointPain ? "true" : "false"} 
               onChange={e => updateProfile({ siJointPain: e.target.value === "true" })}
-              className="w-full mt-1.5 bg-slate-900 border border-slate-700 rounded-lg p-3 text-sm text-white focus:outline-none focus:border-blue-500"
+              className="w-full mt-1.5 bg-white shadow-sm border border-gray-100 border border-gray-200 rounded-lg p-3 text-sm text-gray-900 focus:outline-none focus:border-blue-500"
             >
               <option value="true">Active Inflammation (Enforce Strict Load Restrictions)</option>
               <option value="false">Asymptomatic / Cleared for Mechanical Loading</option>
@@ -63,11 +63,11 @@ export default function SettingsTab() {
           </div>
           
           <div>
-            <label className="text-xs font-medium text-slate-400 uppercase tracking-wider block">Long Term Goals & Context</label>
+            <label className="text-xs font-medium text-gray-500 uppercase tracking-wider block">Long Term Goals & Context</label>
             <textarea 
               value={profile.goals}
               onChange={e => updateProfile({ goals: e.target.value })}
-              className="w-full mt-1.5 bg-slate-900 border border-slate-700 rounded-lg p-3 text-sm text-white focus:outline-none focus:border-blue-500 h-24 resize-none custom-scrollbar"
+              className="w-full mt-1.5 bg-white shadow-sm border border-gray-100 border border-gray-200 rounded-lg p-3 text-sm text-gray-900 focus:outline-none focus:border-blue-500 h-24 resize-none custom-scrollbar"
               placeholder="Describe your primary fitness goals and any other health conditions..."
             />
           </div>
@@ -79,15 +79,15 @@ export default function SettingsTab() {
         <h2 className="text-lg font-semibold text-indigo-400 mb-4">App Settings</h2>
         
         <div>
-          <label className="text-xs font-medium text-slate-400 uppercase tracking-wider block">Gemini API Key</label>
+          <label className="text-xs font-medium text-gray-500 uppercase tracking-wider block">Gemini API Key</label>
           <input 
             type="password" 
             value={profile.apiKey}
             onChange={e => updateProfile({ apiKey: e.target.value })}
             placeholder="AIzaSy..."
-            className="w-full mt-1.5 bg-slate-900 border border-slate-700 rounded-lg p-3 text-sm text-white focus:outline-none focus:border-indigo-500"
+            className="w-full mt-1.5 bg-white shadow-sm border border-gray-100 border border-gray-200 rounded-lg p-3 text-sm text-gray-900 focus:outline-none focus:border-indigo-500"
           />
-          <p className="text-xs text-slate-500 mt-2">
+          <p className="text-xs text-gray-400 mt-2">
             Stored locally in your browser. Required for the Virtual Coach and Week Generation.
           </p>
           <button 
@@ -110,7 +110,7 @@ export default function SettingsTab() {
                 alert(`Network Error: ${err.message}`);
               }
             }}
-            className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
+            className="mt-4 bg-emerald-600 text-white hover:bg-emerald-700 px-4 py-2 rounded-lg text-sm font-semibold transition-colors"
           >
             Debug API Key (List Models)
           </button>
@@ -131,7 +131,7 @@ export default function SettingsTab() {
           
           <button 
             onClick={() => fileInputRef.current.click()}
-            className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 px-4 py-2 rounded-xl text-sm transition-colors"
+            className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 border border-gray-200 text-gray-800 px-4 py-2 rounded-xl text-sm transition-colors"
           >
             <Upload size={16} /> Import Backup JSON
           </button>
@@ -143,7 +143,7 @@ export default function SettingsTab() {
             className="hidden" 
           />
         </div>
-        <p className="text-[11px] text-slate-500 mt-3">Export your data regularly so you can migrate it to the cloud later without losing progress.</p>
+        <p className="text-[11px] text-gray-400 mt-3">Export your data regularly so you can migrate it to the cloud later without losing progress.</p>
       </div>
 
     </div>
