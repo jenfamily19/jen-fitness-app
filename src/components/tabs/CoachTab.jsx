@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useStore } from '../../store';
 import { MessageSquare, Send, Sparkles } from 'lucide-react';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 export default function CoachTab() {
   const apiKey = useStore(state => state.profile.apiKey);
@@ -36,18 +37,13 @@ Please be concise, encouraging, and provide scientifically sound fitness advice.
 
     try {
       const prompt = `${getSystemPrompt()}\n\nUser: ${input}`;
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-      });
-      const data = await response.json();
+      const genAI = new GoogleGenerativeAI(apiKey);
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       
-      if (!response.ok) {
-        throw new Error(data.error?.message || `API Error: ${response.status}`);
-      }
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const botText = response.text() || "I couldn't process that.";
       
-      const botText = data.candidates?.[0]?.content?.parts?.[0]?.text || "I couldn't process that.";
       addChatMessage({ role: 'bot', text: botText });
     } catch (err) {
       console.error("Gemini API Error:", err);
@@ -76,14 +72,12 @@ Output ONLY valid JSON representing the 'workouts' array with this structure:
 ]
 Do not include markdown blocks or any other text. JUST JSON.`;
 
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-      });
+      const genAI = new GoogleGenerativeAI(apiKey);
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
       
-      const data = await response.json();
-      let responseText = data.candidates?.[0]?.content?.parts?.[0]?.text || "[]";
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      let responseText = response.text() || "[]";
       responseText = responseText.replace(/```json/g, '').replace(/```/g, '').trim();
       
       const newWorkouts = JSON.parse(responseText);

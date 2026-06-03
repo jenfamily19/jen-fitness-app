@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { useStore } from '../../store';
 import { Camera, Upload, AlertCircle, Loader2, Save, Trash2 } from 'lucide-react';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 export default function ScannerTab() {
   const profile = useStore(state => state.profile);
@@ -66,26 +67,21 @@ Return a structured JSON breakdown of the meal's nutritional content. The JSON m
 Respond ONLY with the JSON object, absolutely no markdown wrappers like \`\`\`json.
       `;
 
-      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro-latest:generateContent?key=${profile.apiKey}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{
-            parts: [
-              { text: promptText },
-              { inlineData: { mimeType: imageFile.type || 'image/jpeg', data: base64Data } }
-            ]
-          }],
-          generationConfig: { temperature: 0.2 }
-        })
-      });
+      const genAI = new GoogleGenerativeAI(profile.apiKey);
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-      if (!response.ok) {
-        throw new Error(`API Error: ${response.status}`);
-      }
-
-      const data = await response.json();
-      let responseText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      const result = await model.generateContent([
+        promptText,
+        {
+          inlineData: {
+            data: base64Data,
+            mimeType: imageFile.type || 'image/jpeg'
+          }
+        }
+      ]);
+      
+      const response = await result.response;
+      let responseText = response.text();
       
       if (!responseText) {
         throw new Error("No response from AI.");
