@@ -42,10 +42,16 @@ Please be concise, encouraging, and provide scientifically sound fitness advice.
         body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
       });
       const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error?.message || `API Error: ${response.status}`);
+      }
+      
       const botText = data.candidates?.[0]?.content?.parts?.[0]?.text || "I couldn't process that.";
       addChatMessage({ role: 'bot', text: botText });
     } catch (err) {
-      addChatMessage({ role: 'bot', text: "Error connecting to AI. Check your API key in Settings." });
+      console.error("Gemini API Error:", err);
+      addChatMessage({ role: 'bot', text: `API Error: ${err.message}. Please double check your API key in Settings.` });
     } finally {
       setIsLoading(false);
     }
