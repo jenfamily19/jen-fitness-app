@@ -93,9 +93,15 @@ export default function SettingsTab() {
           throw new Error("Invalid format: Missing the 'state' root object.");
       }
       
-      const { currentWeek, workouts, meals } = parsedData.state;
-      if (currentWeek === undefined || !Array.isArray(workouts) || !Array.isArray(meals)) {
-          throw new Error("Validation Failed: The payload is missing core requirements (currentWeek, workouts, or meals).");
+      const { currentWeek, workouts, meals, supplements } = parsedData.state;
+      
+      const hasValidWorkouts = Array.isArray(workouts);
+      const hasValidMeals = Array.isArray(meals);
+      const hasValidSupplements = Array.isArray(supplements);
+      const hasValidWeek = currentWeek !== undefined;
+      
+      if (!hasValidWeek && !hasValidWorkouts && !hasValidMeals && !hasValidSupplements) {
+          throw new Error("Validation Failed: The payload must contain at least one valid update array (workouts, meals, supplements) or currentWeek.");
       }
 
       // Hydrate Global State
