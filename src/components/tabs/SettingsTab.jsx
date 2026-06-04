@@ -5,7 +5,7 @@ import { useRef, useState, useEffect } from 'react';
 export default function SettingsTab() {
   const profile = useStore(state => state.profile);
   const updateProfile = useStore(state => state.updateProfile);
-  const importData = useStore(state => state.importData);
+  const safeImportPlan = useStore(state => state.safeImportPlan);
   const fileInputRef = useRef(null);
 
   // Modal States
@@ -46,7 +46,7 @@ export default function SettingsTab() {
       try {
         const imported = JSON.parse(event.target.result);
         if (imported && imported.state) {
-            importData(imported.state);
+            safeImportPlan(imported.state);
             setSuccessToast("Backup file imported successfully!");
         } else {
             alert("Invalid backup file format.");
@@ -99,7 +99,7 @@ export default function SettingsTab() {
       }
 
       // Hydrate Global State
-      importData(parsedData.state);
+      safeImportPlan(parsedData);
       
       // Cleanup & Success
       setIsImportOpen(false);

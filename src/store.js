@@ -195,7 +195,25 @@ export const useStore = create(
                 };
             }),
             
-            importData: (data) => set(() => data),
+            safeImportPlan: (newPlan) => set((state) => {
+                // Dig into the 'state' wrapper if the JSON came nested
+                const planData = newPlan.state ? newPlan.state : newPlan; 
+                
+                return {
+                    ...state,
+                    currentWeek: planData.currentWeek || state.currentWeek,
+                    workouts: planData.workouts || state.workouts,
+                    meals: planData.meals || state.meals,
+                    supplements: planData.supplements || state.supplements,
+                    
+                    // CRITICAL: These fields are protected and ALWAYS inherit from the local state
+                    history: state.history,
+                    profile: state.profile,
+                    scannedMeals: state.scannedMeals,
+                    chatHistory: state.chatHistory,
+                    telemetry: state.telemetry
+                };
+            }),
         }),
         { 
             name: 'jen-fitness-app-storage',
