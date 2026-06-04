@@ -196,17 +196,29 @@ export const useStore = create(
             }),
             
             safeImportPlan: (newPlan) => set((state) => {
-                // Dig into the 'state' wrapper if the JSON came nested
                 const planData = newPlan.state ? newPlan.state : newPlan; 
                 
+                // Helper to merge arrays based on ID to avoid wiping local progress
+                const mergeArrays = (localArr, importedArr, idKey) => {
+                    if (!importedArr) return localArr;
+                    const merged = [...localArr];
+                    importedArr.forEach(importedItem => {
+                        const index = merged.findIndex(item => item[idKey] === importedItem[idKey]);
+                        if (index >= 0) merged[index] = importedItem; // Overwrite if same ID
+                        else merged.push(importedItem); // Append if new
+                    });
+                    return merged;
+                };
+
                 return {
                     ...state,
                     currentWeek: planData.currentWeek || state.currentWeek,
-                    workouts: planData.workouts || state.workouts,
-                    meals: planData.meals || state.meals,
-                    supplements: planData.supplements || state.supplements,
+                    // Safely merge arrays so importing Week 2 appends instead of overwriting Week 1
+                    workouts: mergeArrays(state.workouts, planData.workouts, 'dayId'),
+                    meals: mergeArrays(state.meals, planData.meals, 'id'),
+                    supplements: mergeArrays(state.supplements, planData.supplements, 'id'),
                     
-                    // CRITICAL: These fields are protected and ALWAYS inherit from the local state
+                    // CRITICAL: Always inherit from local state
                     history: state.history,
                     profile: state.profile,
                     scannedMeals: state.scannedMeals,
